@@ -1,4 +1,4 @@
-package com.ksone.myreferenceserver.domain.user;
+package com.myRef.myRefServer.domain.user.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

@@ -1,6 +1,6 @@
-package com.ksone.myreferenceserver.domain.userCategory;
+package com.myRef.myRefServer.domain.category.entity;
 
-import com.ksone.myreferenceserver.domain.user.User;
+import com.myRef.myRefServer.domain.user.entity.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Table(name = "UserCategory")
 @Entity
-public class UserCategory {
+public class Category {
 
     @Id
     @Column(name = "categoryId")
