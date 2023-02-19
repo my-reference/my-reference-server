@@ -1,4 +1,4 @@
-package com.ksone.myreferenceserver;
+package com.myRef.myRefServer;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

@@ -1,5 +1,6 @@
-package com.ksone.myreferenceserver.domain.user;
+package com.myRef.myRefServer.domain.user.repository;
 
+import com.myRef.myRefServer.domain.user.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

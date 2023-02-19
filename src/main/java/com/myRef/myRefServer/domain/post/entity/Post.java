@@ -1,6 +1,6 @@
-package com.ksone.myreferenceserver.domain.userPosts;
+package com.myRef.myRefServer.domain.post.entity;
 
-import com.ksone.myreferenceserver.domain.userCategory.UserCategory;
+import com.myRef.myRefServer.domain.category.entity.Category;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,16 +11,16 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "UserPosts")
+@Table(name = "UserPost")
 @Entity
-public class UserPosts {
+public class Post {
     @Id
     @Column(name = "postId")
     private Long postId;
 
-    @ManyToOne(targetEntity = UserCategory.class, fetch = FetchType.LAZY)
+    @ManyToOne(targetEntity = Category.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "categoryName")
-    private UserCategory categoryName;
+    private Category categoryName;
 
     @Column(name = "postLink")
     private String postLink;
