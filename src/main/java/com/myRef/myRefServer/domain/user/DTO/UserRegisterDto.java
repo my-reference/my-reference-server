@@ -1,13 +1,13 @@
 package com.myRef.myRefServer.domain.user.DTO;
 
 import com.myRef.myRefServer.domain.user.entity.User;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
 
 @Data
 @NoArgsConstructor

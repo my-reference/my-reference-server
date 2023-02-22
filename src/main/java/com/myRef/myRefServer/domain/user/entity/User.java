@@ -1,14 +1,14 @@
 package com.myRef.myRefServer.domain.user.entity;
 
 import com.myRef.myRefServer.domain.BaseTimeEntity;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import javax.persistence.*;
-import javax.validation.constraints.Email;
 
 @Getter
 @Builder
