@@ -1,12 +1,12 @@
 package com.myRef.myRefServer.domain.post.entity;
 
 import com.myRef.myRefServer.domain.category.entity.Category;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
 
 @Getter
 @Builder

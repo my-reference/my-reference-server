@@ -2,8 +2,10 @@ package com.myRef.myRefServer.config;
 
 import lombok.RequiredArgsConstructor;
 import org.apache.catalina.filters.CorsFilter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -13,13 +15,14 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @RequiredArgsConstructor
-@EnableWebSecurity(debug = true)
+@EnableWebSecurity
 @Configuration
 public class SecurityConfig {
+
     private final JwtTokenProvider jwtTokenProvider;
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
-    private final CorsConfig corsConfig;
+//    private final CorsConfig corsConfig;
 
 
     @Bean
@@ -42,18 +45,11 @@ public class SecurityConfig {
             http
                     .csrf().disable()
                     .formLogin().disable()
-                    .httpBasic().disable();
-
-            //
-            http
-                    .authorizeRequests()
-                    .antMatchers(
-                            "/",
-                            "/v1/signup",
-                            "/v1/login*",
-                            "/favicon.ico"
-                    ).permitAll()
-                    .anyRequest().authenticated();
+                    .httpBasic().disable()
+                    .authorizeHttpRequests(request -> request
+                            .requestMatchers("/", "/v1/**", "/v1/signup**", "/v1/login**").permitAll()
+                            .anyRequest().authenticated()
+                    );
 
             // No session will be created or used by spring security
             http
