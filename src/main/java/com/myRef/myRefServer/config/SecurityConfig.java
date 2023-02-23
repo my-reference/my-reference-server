@@ -1,11 +1,12 @@
 package com.myRef.myRefServer.config;
 
+import com.myRef.myRefServer.config.jwt.JwtAccessDeniedHandler;
+import com.myRef.myRefServer.config.jwt.JwtAuthenticationEntryPoint;
+import com.myRef.myRefServer.config.jwt.JwtSecurityConfig;
+import com.myRef.myRefServer.config.jwt.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
-import org.apache.catalina.filters.CorsFilter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -47,7 +48,11 @@ public class SecurityConfig {
                     .formLogin().disable()
                     .httpBasic().disable()
                     .authorizeHttpRequests(request -> request
-                            .requestMatchers("/", "/v1/**", "/v1/signup**", "/v1/login**").permitAll()
+                            .requestMatchers(
+                                    "/",
+                                    "/v1/signup",
+                                    "/v1/login*",
+                                    "/v1/token/refresh").permitAll()
                             .anyRequest().authenticated()
                     );
 

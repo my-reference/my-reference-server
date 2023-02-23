@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 
@@ -32,7 +33,7 @@ public class User extends BaseTimeEntity {
     @Column(nullable = false)
     private String userNickname;
 
-    public User hashPassword(PasswordEncoder passwordEncoder) {
+    public User hashPassword(BCryptPasswordEncoder passwordEncoder) {
         this.userPassword = passwordEncoder.encode(this.userPassword);
         return this;
     }

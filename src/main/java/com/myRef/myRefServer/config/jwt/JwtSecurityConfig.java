@@ -1,4 +1,4 @@
-package com.myRef.myRefServer.config;
+package com.myRef.myRefServer.config.jwt;
 
 
 import lombok.RequiredArgsConstructor;

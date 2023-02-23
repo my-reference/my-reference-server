@@ -1,4 +1,4 @@
-package com.myRef.myRefServer.config;
+package com.myRef.myRefServer.config.jwt;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
