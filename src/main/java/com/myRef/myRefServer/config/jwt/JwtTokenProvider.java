@@ -2,6 +2,7 @@ package com.myRef.myRefServer.config.jwt;
 
 import com.myRef.myRefServer.exception.CustomException;
 import io.jsonwebtoken.*;
+import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,6 +14,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 
+import javax.crypto.SecretKey;
+import java.nio.charset.StandardCharsets;
+import java.security.Key;
 import java.text.DateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -49,7 +53,7 @@ public class JwtTokenProvider {
      * @return
      */
     public String generateAccessToken(Authentication authentication) {
-
+        Key key = Keys.hmacShaKeyFor(access_secret_key.getBytes(StandardCharsets.UTF_8));
         Claims claims = Jwts.claims().setSubject(authentication.getName());
 
         Date now = new Date();
@@ -59,7 +63,7 @@ public class JwtTokenProvider {
                 .setClaims(claims)
                 .setIssuedAt(now)
                 .setExpiration(expiresIn)
-                .signWith(SignatureAlgorithm.HS256, access_secret_key)
+                .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
     }
 
@@ -72,8 +76,8 @@ public class JwtTokenProvider {
     public String generateRefreshToken(Authentication authentication) {
         System.out.println("inside generateRefreshToken");
         Claims claims = Jwts.claims().setSubject(authentication.getName());
+        Key key = Keys.hmacShaKeyFor(refresh_secret_key.getBytes(StandardCharsets.UTF_8));
 
-        Date now = new Date();
         System.out.println("dd");
         Instant issuedAt = Instant.now().truncatedTo(ChronoUnit.SECONDS);
         Instant expiration = issuedAt.plus(refresh_expire_time, ChronoUnit.SECONDS);
@@ -83,7 +87,7 @@ public class JwtTokenProvider {
                 .setClaims(claims)
                 .setIssuedAt(Date.from(issuedAt))
                 .setExpiration(Date.from(expiration))
-                .signWith(SignatureAlgorithm.HS256, refresh_secret_key)
+                .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
     }
 
@@ -94,7 +98,7 @@ public class JwtTokenProvider {
      * @return
      */
     public Authentication getAuthenticationByAccessToken(String accessToken) {
-        String userPrincipal = Jwts.parser().setSigningKey(access_secret_key).parseClaimsJws(accessToken).getBody().getSubject();
+        String userPrincipal = Jwts.parserBuilder().setSigningKey(access_secret_key.getBytes()).build().parseClaimsJws(accessToken).getBody().getSubject();
         UserDetails userDetails = userDetailsService.loadUserByUsername(userPrincipal);
 
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
@@ -107,7 +111,7 @@ public class JwtTokenProvider {
      * @return
      */
     public Authentication getAuthenticationByRefreshToken(String refreshToken) {
-        String userPrincipal = Jwts.parser().setSigningKey(refresh_secret_key).parseClaimsJws(refreshToken).getBody().getSubject();
+        String userPrincipal = Jwts.parserBuilder().setSigningKey(refresh_secret_key.getBytes()).build().parseClaimsJws(refreshToken).getBody().getSubject();
         UserDetails userDetails = userDetailsService.loadUserByUsername(userPrincipal);
 
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
@@ -134,10 +138,13 @@ public class JwtTokenProvider {
      */
     public boolean validateAccessToken(String accessToken) {
         try {
-            Jwts.parser().setSigningKey(access_secret_key).parseClaimsJws(accessToken);
+            System.out.println("inside validateAccessToken------");
+            String res = String.valueOf(Jwts.parserBuilder().setSigningKey(access_secret_key.getBytes()).build().parseClaimsJws(accessToken));
+            System.out.println(res);
             return true;
-        } catch (JwtException e) {
+        } catch (Exception e) {
             // MalformedJwtException | ExpiredJwtException | IllegalArgumentException
+            System.out.println(e.getMessage());
             throw new CustomException("Access 토큰이 유효하지 않습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -149,7 +156,7 @@ public class JwtTokenProvider {
      */
     public boolean validateRefreshToken(String refreshToken) {
         try {
-            Jwts.parser().setSigningKey(refresh_secret_key).parseClaimsJws(refreshToken);
+            Jwts.parserBuilder().setSigningKey(refresh_secret_key.getBytes()).build().parseClaimsJws(refreshToken);
             return true;
         } catch (JwtException e) {
             // MalformedJwtException | ExpiredJwtException | IllegalArgumentException
