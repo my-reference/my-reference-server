@@ -19,10 +19,10 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 
@@ -117,6 +117,11 @@ public class UserServiceImpl implements UserService {
         } catch (AuthenticationException e) {
             throw new CustomException("유효하지 않은 Refresh 토큰입니다.", HttpStatus.BAD_REQUEST);
         }
+    }
+
+    @Override
+    public Optional<User> findByEmail(String email) {
+        return userRepository.findByUserEmail(email);
     }
 
 }
