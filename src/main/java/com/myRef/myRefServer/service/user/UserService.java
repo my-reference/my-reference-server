@@ -13,6 +13,5 @@ public interface UserService {
     Long signUp(UserRegisterDto requestDto) throws Exception;
     ResponseEntity<JwtTokenDto> logIn(UserLoginDto requestDto);
     ResponseEntity<JwtTokenDto> regenerateToken(RegenarateTokenDto refreshTokenDto);
-
     Optional<User> findByEmail(String email);
 }

@@ -74,14 +74,11 @@ public class JwtTokenProvider {
      * @return refresh token
      */
     public String generateRefreshToken(Authentication authentication) {
-        System.out.println("inside generateRefreshToken");
         Claims claims = Jwts.claims().setSubject(authentication.getName());
         Key key = Keys.hmacShaKeyFor(refresh_secret_key.getBytes(StandardCharsets.UTF_8));
 
-        System.out.println("dd");
         Instant issuedAt = Instant.now().truncatedTo(ChronoUnit.SECONDS);
         Instant expiration = issuedAt.plus(refresh_expire_time, ChronoUnit.SECONDS);
-        System.out.println("dddd");
 
         return Jwts.builder()
                 .setClaims(claims)
@@ -138,13 +135,10 @@ public class JwtTokenProvider {
      */
     public boolean validateAccessToken(String accessToken) {
         try {
-            System.out.println("inside validateAccessToken------");
-            String res = String.valueOf(Jwts.parserBuilder().setSigningKey(access_secret_key.getBytes()).build().parseClaimsJws(accessToken));
-            System.out.println(res);
+            Jwts.parserBuilder().setSigningKey(access_secret_key.getBytes()).build().parseClaimsJws(accessToken);
             return true;
         } catch (Exception e) {
             // MalformedJwtException | ExpiredJwtException | IllegalArgumentException
-            System.out.println(e.getMessage());
             throw new CustomException("Access 토큰이 유효하지 않습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
