@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 
 
 @Getter
@@ -27,6 +28,6 @@ public class Category {
     @Column(name = "categoryName")
     private String categoryName;
 
-    @Column(name = "isFavorite")
+    @Column(name = "isFavorite", columnDefinition = "TINYINT(1) DEFAULT 0")
     private boolean isFavorite;
 }

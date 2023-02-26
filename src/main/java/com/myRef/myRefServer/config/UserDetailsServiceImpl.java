@@ -25,7 +25,9 @@ public class UserDetailsServiceImpl implements UserDetailsService { // UserDetai
         System.out.println("email in loadUserByUsername = " + userEmail);
         User user = userRepository.findByUserEmail(userEmail)
                 .orElseThrow(UserNotFoundException::new);
+        System.out.println(user);
         Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
+        System.out.println("//////");
 
         return new org
                 .springframework
