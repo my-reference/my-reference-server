@@ -27,7 +27,9 @@ public class JwtTokenFilter extends OncePerRequestFilter {
             // 2. validateAccessToken으로 Access 토큰 유효성 검사
             if (token != null && jwtTokenProvider.validateAccessToken(token)) {
                 Authentication authentication = jwtTokenProvider.getAuthenticationByAccessToken(token);
+                System.out.println(authentication);
                 SecurityContextHolder.getContext().setAuthentication(authentication);   // 토큰이 유효할 경우 토큰에서 Authentication 객체를 가지고 와서 SecurityContext 에 저장
+                System.out.println("done");
             }
         } catch (CustomException e) {
             SecurityContextHolder.clearContext();
