@@ -32,7 +32,7 @@ public class CategoryServiceImpl implements CategoryService{
     }
 
     @Override
-    public void deleteCategory() {
-
+    public void deleteCategory(CategoryDeleteDto requestDto) {
+        categoryRepository.deleteById(requestDto.getCategoryId());
     }
 }

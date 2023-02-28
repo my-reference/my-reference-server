@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 public class CategoryReqDto {
 
     @Data
+    @NoArgsConstructor
     public static class CategoryAddDto {
         private String categoryName;
 
@@ -22,6 +23,17 @@ public class CategoryReqDto {
                     .id(id)
                     .categoryName(categoryName)
                     .build();
+        }
+    }
+
+    @Data
+    @NoArgsConstructor
+    public static class CategoryDeleteDto {
+        private Long categoryId;
+
+        @Builder
+        public CategoryDeleteDto(Long categoryId) {
+            this.categoryId = categoryId;
         }
     }
 

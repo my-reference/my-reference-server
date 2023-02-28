@@ -27,7 +27,13 @@ public class CategoryController {
     }
 
     @DeleteMapping("/delete")
-    public void deleteCategory() {
+    public void deleteCategory(@RequestBody CategoryDeleteDto categoryDeleteDto, @AuthenticationPrincipal UserDetails userDetails) throws UserNotFoundException {
+        System.out.println("delete");
+        try{
+            categoryService.deleteCategory(categoryDeleteDto);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
 
     }
 

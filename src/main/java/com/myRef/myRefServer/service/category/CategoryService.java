@@ -10,5 +10,5 @@ public interface CategoryService {
     Long addCategory(CategoryAddDto requestDto, User id);
     List<Category> getCategoryList();
     Long addFavoriteCategory();
-    void deleteCategory();
+    void deleteCategory(CategoryDeleteDto requestDto);
 }
