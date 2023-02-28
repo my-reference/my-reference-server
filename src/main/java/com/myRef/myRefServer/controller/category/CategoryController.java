@@ -1,7 +1,7 @@
 package com.myRef.myRefServer.controller.category;
 
 import com.myRef.myRefServer.controller.exception.UserNotFoundException;
-import com.myRef.myRefServer.domain.category.DTO.CategoryAddDto;
+import com.myRef.myRefServer.domain.category.DTO.CategoryReqDto.*;
 import com.myRef.myRefServer.domain.user.entity.User;
 import com.myRef.myRefServer.service.category.CategoryServiceImpl;
 import com.myRef.myRefServer.service.user.UserServiceImpl;

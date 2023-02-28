@@ -1,6 +1,6 @@
 package com.myRef.myRefServer.service.category;
 
-import com.myRef.myRefServer.domain.category.DTO.CategoryAddDto;
+import com.myRef.myRefServer.domain.category.DTO.CategoryReqDto.*;
 import com.myRef.myRefServer.domain.category.entity.Category;
 import com.myRef.myRefServer.domain.category.repository.CategoryRepository;
 import com.myRef.myRefServer.domain.user.entity.User;
