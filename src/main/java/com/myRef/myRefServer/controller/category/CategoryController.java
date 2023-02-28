@@ -1,15 +1,11 @@
 package com.myRef.myRefServer.controller.category;
 
 import com.myRef.myRefServer.controller.exception.UserNotFoundException;
-import com.myRef.myRefServer.domain.category.DTO.CategoryResDto.*;
-import com.myRef.myRefServer.domain.category.DTO.CategoryReqDto.*;
 import com.myRef.myRefServer.domain.category.DTO.CategoryAddDto;
 import com.myRef.myRefServer.domain.user.entity.User;
 import com.myRef.myRefServer.service.category.CategoryServiceImpl;
 import com.myRef.myRefServer.service.user.UserServiceImpl;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
@@ -23,15 +19,11 @@ public class CategoryController {
     private final CategoryServiceImpl categoryService;
 
     @PostMapping("/new")
-    public CategoryAddDto addCategory(@RequestBody CategoryAddDto categoryAddDto) throws UserNotFoundException {
-        System.out.println("1111");
-//        User userDetail = userService.findByEmail(userDetails.getUsername())
-//                .orElseThrow(() -> new UserNotFoundException());
+    public Long addCategory(@RequestBody CategoryAddDto categoryAddDto, @AuthenticationPrincipal UserDetails userDetails) throws UserNotFoundException {
+        User userDetail = userService.findByEmail(userDetails.getUsername())
+                .orElseThrow(() -> new UserNotFoundException());
 
-//        System.out.println(userDetail);
-        System.out.println(categoryAddDto);
-        return categoryAddDto;
-//        return categoryService.addCategory(categoryAddDto, userDetail);
+        return categoryService.addCategory(categoryAddDto, userDetail);
     }
 
     @DeleteMapping("/delete")

@@ -6,12 +6,14 @@ import jakarta.validation.constraints.NotEmpty;
 import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Data
 @Getter
+@NoArgsConstructor
 public class CategoryAddDto {
 
-    @NotEmpty
+    @NotEmpty(message = "카테고리 이름을 입력해주세요.")
     private String categoryName;
 
     @Builder
@@ -24,6 +26,6 @@ public class CategoryAddDto {
                 .id(id)
                 .categoryName(categoryName)
                 .build();
-    }
 
+    }
 }

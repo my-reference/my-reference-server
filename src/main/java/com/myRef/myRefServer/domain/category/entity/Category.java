@@ -1,5 +1,6 @@
 package com.myRef.myRefServer.domain.category.entity;
 
+import com.myRef.myRefServer.domain.BaseTimeEntity;
 import com.myRef.myRefServer.domain.user.entity.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -15,7 +16,7 @@ import org.hibernate.annotations.ColumnDefault;
 @AllArgsConstructor
 @Table(name = "Category")
 @Entity
-public class Category {
+public class Category extends BaseTimeEntity {
     @Id
     @Column(name = "categoryId")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
