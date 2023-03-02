@@ -20,7 +20,7 @@ public class CategoryReqDto {
 
         public Category dtoToEntity(User id) {
             return Category.builder()
-                    .id(id)
+                    .user(id)
                     .categoryName(categoryName)
                     .build();
         }

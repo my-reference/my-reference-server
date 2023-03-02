@@ -16,14 +16,15 @@ public class CategoryServiceImpl implements CategoryService{
     private final CategoryRepository categoryRepository;
 
     @Override
-    public Long addCategory(CategoryAddDto requestDto, User id) {
-        Category category = categoryRepository.save(requestDto.dtoToEntity(id));
+    public Long addCategory(CategoryAddDto requestDto, User user) {
+        Category category = categoryRepository.save(requestDto.dtoToEntity(user));
         return category.getCategoryId();
     }
 
     @Override
-    public List<Category> getCategoryList() {
-        return null;
+    public List<Category> getCategoryList(User user) {
+        System.out.println(user.getId());
+        return categoryRepository.findByUser_Id(user.getId());
     }
 
     @Override

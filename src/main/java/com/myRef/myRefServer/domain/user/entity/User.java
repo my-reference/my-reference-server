@@ -1,6 +1,7 @@
 package com.myRef.myRefServer.domain.user.entity;
 
 import com.myRef.myRefServer.domain.BaseTimeEntity;
+import com.myRef.myRefServer.domain.category.entity.Category;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
@@ -9,6 +10,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Getter
@@ -19,7 +23,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Entity
 public class User extends BaseTimeEntity {
     @Id
-    @Column(name="userId")
+    @Column(name = "userId")
     @GeneratedValue(strategy = GenerationType.IDENTITY)  // Identity : auto-increment
     private Long id;
 
@@ -32,6 +36,9 @@ public class User extends BaseTimeEntity {
 
     @Column(nullable = false)
     private String userNickname;
+
+    @OneToMany(mappedBy = "user")
+    List<Category> categoryList = new ArrayList<>();
 
     public User hashPassword(BCryptPasswordEncoder passwordEncoder) {
         this.userPassword = passwordEncoder.encode(this.userPassword);
